@@ -24,6 +24,18 @@ if ( $related_products ) : ?>
 			<?php esc_html_e( 'Related products', 'outstock' ); ?>
 		<?php } ?>
 	</span></h3>
+	
+	
+
+	<?php
+
+	
+	
+	echo do_shortcode('[designer_info]');
+	?>
+
+	
+	
 		<?php woocommerce_product_loop_start(); ?>
 			<?php $count = 0; foreach ( $related_products as $related_product ) : $count++; ?>
 
