@@ -7,9 +7,12 @@ Code line:
 Description:
 We have echo this shortcode (designer_info)
 
+Date: 30/10/2018
+
 ================
 
-Location:wp-content/outstock/functions.php
+Location:
+wp-content/outstock/functions.php
 
 Code line:
 269
@@ -18,11 +21,37 @@ Description:
 We have deleted this code: 
 add_action('woocommerce_after_single_product', 'wh_renderProductTagDetails');
 
+Date: 30/10/2018
+
 Code line:
 288
 
 Description:
 We have created shortcake for function wh_renderProductTagDetails
+
+Date: 30/10/2018
+
+Code Line:
+283-288
+
+Description:
+We have added code for moving upsell products (spare products) bellow related products (designer products) 
+
+Date: 30/10/2018
+
+
+================
+
+Location: wp-content/themes/outstock/woocommerce/single-product/up-sells.php
+
+Code line:
+31, 42
+
+Description:
+We have removed div data-owl="slide"
+
+Date: 30/10/2018
+
 
 
 

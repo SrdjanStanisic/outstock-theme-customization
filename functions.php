@@ -275,11 +275,17 @@ function wh_renderProductTagDetails()
         return;
     foreach ($tags as $tag_detail)
     {			
-        echo '<div class="row"><div class="xlarge-11 xlarge-centered columns"><p class="dsgn-footer-related-title"><b> ' . $tag_detail->name . '</b></p></div></div>'; //to print title
-        echo '<div class="row dsgn-footer-related"><div class="xlarge-11 xlarge-centered columns">' .  do_shortcode($tag_detail->description) . '</div></div>'; //to print description
+        echo '<div class="xlarge-9 xlarge-centered columns"><p class="dsgn-footer-related-title"> ' . $tag_detail->name . '</p></div>'; //to print title
+        echo '<div class="dsgn-footer-related"><div class="xlarge-9 xlarge-centered columns">' .  do_shortcode($tag_detail->description) . '</div></div>'; //to print description
     }
 }
 
+//move upsell products (spare products) bellow related products (designer products) 
+add_action( 'init', 'move_upsells_after_related' );
+function move_upsells_after_related( ) {
+    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+    add_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 25 );
+}
 
 
 //shortcode for designer title and description
