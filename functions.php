@@ -315,6 +315,51 @@ add_filter( 'woocommerce_output_related_products_args', 'jk_related_products_arg
 }
 
 
+//Add tax for CH country
+add_action( 'woocommerce_cart_calculate_fees','woocommerce_custom_surcharge' );
+function woocommerce_custom_surcharge() {
+global $woocommerce;
+
+if ( WC()->customer->get_shipping_country() == 'CH' || WC()->customer->get_shipping_country() == 'NO' ){
+
+    $percentage = 0.077;
+    $taxes = array_sum($woocommerce->cart->taxes);
+    $surcharge = ( $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total ) * $percentage;   
+    // Make sure that you return false here.  We can't double tax people!
+    $woocommerce->cart->add_fee( '7,7% TAX', $surcharge, false, '' );
+}
+}
+
+/**
+*  Add custom handling fee to an order 
+*/
+function pt_add_handling_fee() {
+     global $woocommerce;
+ 
+if ( WC()->customer->get_shipping_country() == 'CH' || WC()->customer->get_shipping_country() == 'NO' ){
+ 	 $fee = 65.00;
+     if(get_woocommerce_currency()=='CHF'): $fee = 74.00;
+	 elseif(get_woocommerce_currency()=='USD'): $fee = 74.00;
+	 elseif(get_woocommerce_currency()=='GBP'): $fee = 58.00;
+	 endif; 
+	 
+	 $title = 'Customs Documents';
+	
+	 if(ICL_LANGUAGE_CODE=='it'): $title = 'Documenti Doganali';
+	 elseif(ICL_LANGUAGE_CODE=='fr'): $title = 'Documents douaniers';
+	 elseif(ICL_LANGUAGE_CODE=='de'): $title = 'Zoll Dokumente';
+	 endif;
+
+     $woocommerce->cart->add_fee( $title, $fee, TRUE, 'standard' );
+}
+}
+
+
+// Action -> Add custom handling fee to an order
+add_action( 'woocommerce_cart_calculate_fees', 'pt_add_handling_fee' );
+
+
+
 //Filter products under designers page to remove 
 //spare parts from them and show only their products
 add_filter( 'woocommerce_product_query_tax_query', 'exclude_specific_product_category_query', 10, 2 );
