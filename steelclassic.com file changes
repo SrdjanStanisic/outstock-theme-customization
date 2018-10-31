@@ -59,6 +59,18 @@ We have removed div data-owl="slide"
 
 Date: 30/10/2018
 
+================
+
+Location: wp-content/plugins/improved-variable-product-attributes/includes/ivpa-frontend.php
+
+Code Line:
+914-917
+
+Description:
+We have added a div for displaying 'You selected:' with selected items
+
+Date: 31/10/2018
+
 
 
 
