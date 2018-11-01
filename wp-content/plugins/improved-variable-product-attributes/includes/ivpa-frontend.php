@@ -911,9 +911,7 @@
 
 			?>
 
-			<?php	echo '<div class="selection_box"><h3>You selected:</h3>
-								<div class="left"></div>
-						  </div>'; ?>
+
 
 				<div <?php echo $curr_add_elements; ?> data-variations="<?php echo '%%%JSON_REPLACE_IVPA%%%'; ?>"<?php echo ( self::ivpa_wpml_language() !== false ? ' data-lang="' . ICL_LANGUAGE_CODE . '"' : '' ); ?> data-type="<?php echo esc_attr( $product->get_type() ); ?>">
 					<div class="ivpa-hidden-price">
@@ -1059,6 +1057,7 @@
 					}
 
 				?>
+
 					<div class="ivpa-opt <?php echo $curr['attr'] == 'ivpa_custom' || $willCustom === true ? 'ivpa_custom_option' : 'ivpa_attribute'; ?> <?php echo $curr['style'] . ' ' . ( $curr['style'] == 'ivpa_text' ? $curr['custom']['style'] : '' ) . ( $curr_is_loop == 'loop' ? ' ' . self::$settings['wc_settings_ivpa_archive_mode'] : '' ); ?><?php echo $curr['attr'] == 'ivpa_custom' && in_array( $curr['style'], array( 'ivpa_text', 'ivpa_color', 'ivpa_image', 'ivpa_html', 'ivpa_selectbox', 'ivpac_checkbox' ) ) && isset( $curr['multiselect'] ) && $curr['multiselect'] == 'yes' ? ' ivpa_multiselect' : ''; ?> <?php echo isset( $var_class ) ? $var_class : '' ; ?>" data-attribute="<?php echo $v; ?>"<?php echo isset( $curr['required'] ) && $curr['required'] == 'yes' || $product->get_type() == 'variable' && $curr['attr'] !== 'ivpa_custom' ? ' data-required="yes"': ''; ?>>
 					<?php
 						if ( $curr_is_loop == 'single' && $curr['style'] == 'ivpa_selectbox' ) {
@@ -1435,7 +1434,12 @@
 
 				?>
 				</div>
-			<?php
+
+			<?php	echo '<div class="selection_box"><h3>You selected:</h3>
+								<div class="left"></div>
+						  </div>'; ?>
+
+				<?php
 
 				$html = trim( ob_get_clean() );
 
