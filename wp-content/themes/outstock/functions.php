@@ -18,6 +18,8 @@ if ( class_exists( 'ReduxFramework' ) && !isset( $redux_demo )){
 	}
 }
 
+
+
 // require system parts
 if ( file_exists( get_template_directory().'/includes/theme-helper.php' ) ) {
 	require_once( get_template_directory().'/includes/theme-helper.php' );
@@ -341,6 +343,7 @@ if ( WC()->customer->get_shipping_country() == 'CH' || WC()->customer->get_shipp
      if(get_woocommerce_currency()=='CHF'): $fee = 74.00;
 	 elseif(get_woocommerce_currency()=='USD'): $fee = 74.00;
 	 elseif(get_woocommerce_currency()=='GBP'): $fee = 58.00;
+	 elseif(get_woocommerce_currency()=='DKK'): $fee = 485.00;
 	 endif; 
 	 
 	 $title = 'Customs Documents';
@@ -353,36 +356,201 @@ if ( WC()->customer->get_shipping_country() == 'CH' || WC()->customer->get_shipp
      $woocommerce->cart->add_fee( $title, $fee, TRUE, 'standard' );
 }
 }
-
-
 // Action -> Add custom handling fee to an order
 add_action( 'woocommerce_cart_calculate_fees', 'pt_add_handling_fee' );
 
 
-
-//Filter products under designers page to remove 
-//spare parts from them and show only their products
-add_filter( 'woocommerce_product_query_tax_query', 'exclude_specific_product_category_query', 10, 2 );
-function exclude_specific_product_category_query( $tax_query, $query ) {
-    // Only on Product Tag archives pages
-    if( is_admin() || ! is_product_tag() ) return $tax_query;
-
-    // HERE Define your product category SLUGs to be excluded 
-    $terms = array( 'spare-parts', 'spare-parts-2', 'reserveonderdelen', 'spare-parts-uk', 'spare-parts-us', 'ersatzteile-de', 'ersatzteile', 'vervangstukken', 'sostituzioni', 'sostituzioni-it', 'pieces-de-rechange', 'pieces-de-rechange-fra'  ); // SLUGs only
-
-    // The taxonomy for Product Categories
-    $taxonomy = 'product_cat'; 
-
-    // Add your criteria
-    $tax_query[] = array(
-        'taxonomy' => $taxonomy,
-        'field'    => 'slug', // Or 'name' or 'term_id'
-        'terms'    => $terms,
-        'operator' => 'NOT IN', // Excluded
-    );
-
-    return $tax_query;
+function onixion_custom_discount() {
+	global $woocommerce;
+	$onixion_price_subtotal = WC()->cart->subtotal;
+	$onixion_discount = 0;
+	$onixion_discount_title = 'Discount: 0%';
+	//EUR
+	if (($onixion_price_subtotal > '200') && ($onixion_price_subtotal <= '600') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.04*(-1);
+		$onixion_discount_title = 'Discount: 4%';
+		
+	}
+	if (($onixion_price_subtotal > '600') && ($onixion_price_subtotal <= '1200') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.08*(-1);
+		$onixion_discount_title = 'Discount: 8%';
+		
+	}
+	if (($onixion_price_subtotal > '1200') && ($onixion_price_subtotal <= '2100') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.14*(-1);
+		$onixion_discount_title = 'Discount: 14%';
+		
+	}
+	if (($onixion_price_subtotal > '2100') && ($onixion_price_subtotal <= '3000') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.19*(-1);
+		$onixion_discount_title = 'Discount: 19%';
+		
+	}
+	if (($onixion_price_subtotal > '3000') && ($onixion_price_subtotal <= '3700') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.23*(-1);
+		$onixion_discount_title = 'Discount: 23%';
+		
+	}
+	if (($onixion_price_subtotal > '3700') && ($onixion_price_subtotal <= '5000') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.27*(-1);
+		$onixion_discount_title = 'Discount: 27%';
+		
+	}
+	if (($onixion_price_subtotal > '5000') && (get_woocommerce_currency()=='EUR')) {
+		$onixion_discount = $onixion_price_subtotal*0.33*(-1);
+		$onixion_discount_title = 'Discount: 33%';
+		
+	}
+	//CHF
+	if (($onixion_price_subtotal > '230') && ($onixion_price_subtotal <= '687') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.04*(-1);
+		$onixion_discount_title = 'Discount: 4%';
+		
+	}
+	if (($onixion_price_subtotal > '687') && ($onixion_price_subtotal <= '1375') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.08*(-1);
+		$onixion_discount_title = 'Discount: 8%';
+		
+	}
+	if (($onixion_price_subtotal > '1375') && ($onixion_price_subtotal <= '2405') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.14*(-1);
+		$onixion_discount_title = 'Discount: 14%';
+		
+	}
+	if (($onixion_price_subtotal > '2405') && ($onixion_price_subtotal <= '3435') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.19*(-1);
+		$onixion_discount_title = 'Discount: 19%';
+		
+	}
+	if (($onixion_price_subtotal > '3435') && ($onixion_price_subtotal <= '4236') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.23*(-1);
+		$onixion_discount_title = 'Discount: 23%';
+		
+	}
+	if (($onixion_price_subtotal > '4236') && ($onixion_price_subtotal <= '5725') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.27*(-1);
+		$onixion_discount_title = 'Discount: 27%';
+		
+	}
+	if (($onixion_price_subtotal > '5725') && (get_woocommerce_currency()=='CHF')) {
+		$onixion_discount = $onixion_price_subtotal*0.33*(-1);
+		$onixion_discount_title = 'Discount: 33%';
+		
+	}
+	//GBP
+	if (($onixion_price_subtotal > '175') && ($onixion_price_subtotal <= '523') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.04*(-1);
+		$onixion_discount_title = 'Discount: 4%';
+		
+	}
+	if (($onixion_price_subtotal > '523') && ($onixion_price_subtotal <= '1045') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.08*(-1);
+		$onixion_discount_title = 'Discount: 8%';
+		
+	}
+	if (($onixion_price_subtotal > '1045') && ($onixion_price_subtotal <= '1830') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.14*(-1);
+		$onixion_discount_title = 'Discount: 14%';
+		
+	}
+	if (($onixion_price_subtotal > '1830') && ($onixion_price_subtotal <= '2615') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.19*(-1);
+		$onixion_discount_title = 'Discount: 19%';
+		
+	}
+	if (($onixion_price_subtotal > '2615') && ($onixion_price_subtotal <= '3223') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.23*(-1);
+		$onixion_discount_title = 'Discount: 23%';
+		
+	}
+	if (($onixion_price_subtotal > '3223') && ($onixion_price_subtotal <= '4355') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.27*(-1);
+		$onixion_discount_title = 'Discount: 27%';
+		
+	}
+	if (($onixion_price_subtotal > '4355') && (get_woocommerce_currency()=='GBP')) {
+		$onixion_discount = $onixion_price_subtotal*0.33*(-1);
+		$onixion_discount_title = 'Discount: 33%';
+		
+	}
+	//USD
+	if (($onixion_price_subtotal > '229') && ($onixion_price_subtotal <= '686') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.04*(-1);
+		$onixion_discount_title = 'Discount: 4%';
+		
+	}
+	if (($onixion_price_subtotal > '686') && ($onixion_price_subtotal <= '1372') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.08*(-1);
+		$onixion_discount_title = 'Discount: 8%';
+		
+	}
+	if (($onixion_price_subtotal > '1372') && ($onixion_price_subtotal <= '2400') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.14*(-1);
+		$onixion_discount_title = 'Discount: 14%';
+		
+	}
+	if (($onixion_price_subtotal > '2400') && ($onixion_price_subtotal <= '3430') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.19*(-1);
+		$onixion_discount_title = 'Discount: 19%';
+		
+	}
+	if (($onixion_price_subtotal > '3430') && ($onixion_price_subtotal <= '4230') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.23*(-1);
+		$onixion_discount_title = 'Discount: 23%';
+		
+	}
+	if (($onixion_price_subtotal > '4230') && ($onixion_price_subtotal <= '5716') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.27*(-1);
+		$onixion_discount_title = 'Discount: 27%';
+		
+	}
+	if (($onixion_price_subtotal > '5716') && (get_woocommerce_currency()=='USD')) {
+		$onixion_discount = $onixion_price_subtotal*0.33*(-1);
+		$onixion_discount_title = 'Discount: 33%';
+		
+	}
+	//DKK
+	if (($onixion_price_subtotal > '1492') && ($onixion_price_subtotal <= '4476') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.04*(-1);
+		$onixion_discount_title = 'Discount: 4%';
+		
+	}
+	if (($onixion_price_subtotal > '4476') && ($onixion_price_subtotal <= '8952') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.08*(-1);
+		$onixion_discount_title = 'Discount: 8%';
+		
+	}
+	if (($onixion_price_subtotal > '8952') && ($onixion_price_subtotal <= '15665') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.14*(-1);
+		$onixion_discount_title = 'Discount: 14%';
+		
+	}
+	if (($onixion_price_subtotal > '15665') && ($onixion_price_subtotal <= '22379') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.19*(-1);
+		$onixion_discount_title = 'Discount: 19%';
+		
+	}
+	if (($onixion_price_subtotal > '22379') && ($onixion_price_subtotal <= '27601') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.23*(-1);
+		$onixion_discount_title = 'Discount: 23%';
+		
+	}
+	if (($onixion_price_subtotal > '27601') && ($onixion_price_subtotal <= '37299') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.27*(-1);
+		$onixion_discount_title = 'Discount: 27%';
+		
+	}
+	if (($onixion_price_subtotal > '37299') && (get_woocommerce_currency()=='DKK')) {
+		$onixion_discount = $onixion_price_subtotal*0.33*(-1);
+		$onixion_discount_title = 'Discount: 33%';
+		
+	}
+	$woocommerce->cart->add_fee( $onixion_discount_title, $onixion_discount, TRUE, 'standard' );
+	
 }
+add_action( 'woocommerce_cart_calculate_fees', 'onixion_custom_discount' );
+
+
 
 
 // Remove the additional information tab from woocommerce - posted by Robin Scott of Silicon Dales @ https://silicondales.com/tutorials/woocommerce-tutorials/remove-tab-woocommerce/
@@ -397,14 +565,16 @@ return $tabs;
 }
 
 
-// remove wp version param from any enqueued scripts
-function vc_remove_wp_ver_css_js( $src ) {
-    if ( strpos( $src, 'ver=' ) )
-        $src = remove_query_arg( 'ver', $src );
-    return $src;
+
+/**
+ * Changes the redirect URL for the Return To Shop button in the cart.
+ *
+ * @return string
+ */
+function wc_empty_cart_redirect_url() {
+	return 'http://steel-classics.com';
 }
-add_filter( 'style_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
-add_filter( 'script_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
+add_filter( 'woocommerce_return_to_shop_redirect', 'wc_empty_cart_redirect_url' );
 
 
 
