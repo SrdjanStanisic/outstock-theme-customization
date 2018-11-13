@@ -140,7 +140,31 @@ Description: 1. We have added price ranges for every currency (EUR, CHF, USD, GB
 
 Date: 10/11/2018
 
+<<<<<<< HEAD
 ----------------
+=======
+================
+
+Location: wp-content/themes/outstock/woocommerce/archive-product.php
+
+Code Line: 84-91
+
+Description: We have added code for designers pages (tag page) to show its title and breadcrumbs 
+	     since by default outstock theme dont have that
+
+Date: 11/11/2018
+
+================
+
+Location: wp-content/plugins/woocommerce/templates/single-product/add-to-cart/variation-add-to-cart-button.php
+
+Code Line: 17 & 31
+
+Description: We have added DIV tag with style to make button appear in new row, 
+	     below product varition and selection box
+
+Date: 11/11/2018
+>>>>>>> d6360b4df556dd5679978c5034159ef57d50d19b
 
 Code Line: Whole file is changed
 
