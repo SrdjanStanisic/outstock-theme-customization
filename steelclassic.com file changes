@@ -125,7 +125,7 @@ Code Line: 155
 Description: We have included the file cart_discount_calculations.php that we are created to show info about current discount 
 	     and products that can be bought to upgrade discount percentage
 
-Date: 10/10/2018
+Date: 10/11/2018
 
 ================
 
@@ -138,7 +138,29 @@ Description: 1. We have added price ranges for every currency (EUR, CHF, USD, GB
 	     higher discount.
 	     2. We have added code for displaying products that customer can buy to get higher discount
 
-Date: 10/10/2018
+Date: 10/11/2018
+
+================
+
+Location: wp-content/themes/outstock/woocommerce/archive-product.php
+
+Code Line: 84-91
+
+Description: We have added code for designers pages (tag page) to show its title and breadcrumbs 
+	     since by default outstock theme dont have that
+
+Date: 11/11/2018
+
+================
+
+Location: wp-content/plugins/woocommerce/templates/single-product/add-to-cart/variation-add-to-cart-button.php
+
+Code Line: 17 & 31
+
+Description: We have added DIV tag with style to make button appear in new row, 
+	     below product varition and selection box
+
+Date: 11/11/2018
 
 
 
